@@ -1,0 +1,2 @@
+- Forzar a solicitar el usuario (ejecutar antes del push)
+	git config --local credential.helper ""
