@@ -1,0 +1,57 @@
+﻿Docker Commands:
+docker info -> Información de docker
+docker version -> Versión de docker
+docker images -> Listar imagenes
+docker ps -> Listar containers activos
+docker ps -a -> Listar todos los containers en cualquier estado
+docker run [imageName] -> Crear contenedor a partir de una imagen
+docker run [imageName] -e [EnvironmentVariable]=[Value] -> Crea un contenedor a partir de una imagen y establece la variable de entorno EnvironmentVariable con el valor Value.
+docker run -it [imageName] -> Levantar un contenedor interactivo
+docker run --name [containerName] -it [imageName] -> Levantar un contenedor interactivo con nombre
+docker run -d [imageName] -> Levantar un contenedor desatendido.
+	-rm: Elimina el container despues de que se pare.
+docker start [containerId] -> Levantar un contenedor que está parado (se pueden usar las primera letras del Id).
+docker attach [containerId] -> Conectarme a un contenedor en ejecución (se pueden usar las primera letras del Id).
+docker stop [containerId] -> Parar un contenedor (se pueden usar las primera letras del Id).
+docker rm [ContainerId]-> Borrar un container
+docker rm [ContainerId] --force -> Borrar un container eliminando las imagenes intermedias.
+docker commit [containerId] [imageName] -> Crear imagen a partir de un contenedor
+docker build -t [imageName] [Directory] -> Crea una imagen a partir del DockerFile del directorio especificado.
+docker build --nocache -t [imageName] [Directory] -> Crea una imagen a partir del DockerFile del directorio especificado obligando a regenerar imagenes intermedias.
+
+
+Ctrl+p+q: Salir de un contenedor sin detenerlo
+
+DockerFile:
+FROM: Desde donde se crea la imagen (Ej. FROM Ubuntu:16.04)
+MAINTAINER: Hace referencia al creador de la receta (Ej. MAINTAINER 'Diego Sánchez' diego.sanchez@innocv.com
+RUN: Ejecutar comandos en la imagen base antes de ser creada (Ej. mkdir)
+ADD/COPY: Agregar o copiar archivos desde el equipo local a la imagen (Ej. ADD (local)index.html (imagen)/var/www/html)
+EXPOSE: Exponer un puerto por defecto para el contenedor (Ej. EXPOSE 8080)
+CMD: Ejecutar acción por defecto al crear el contenedor. (Ej. CMD ["/usr/sbin/apache2", "-D", "FOREGROUND"])
+ENTRYPOINT: Establece el comando y los parámetros que serán ejecutados primero cuando el container es levantado.
+
+
+Plantilla DockFile en .NET CORE:
+
+FROM microsoft/dotnet:2.2-sdk-alpine AS build
+WORKDIR /app
+
+# copy csproj and restore as distinct layers
+COPY *.sln .
+COPY aspnetapp/*.csproj ./aspnetapp/
+RUN dotnet restore
+
+# copy everything else and build app
+COPY aspnetapp/. ./aspnetapp/
+WORKDIR /app/aspnetapp
+RUN dotnet publish -c Release -o out
+
+FROM microsoft/dotnet:2.2-aspnetcore-runtime-alpine AS runtime
+WORKDIR /app
+COPY --from=build /app/aspnetapp/out ./
+ENTRYPOINT ["dotnet", "aspnetapp.dll"]
+
+Ejemplos de DockFile: https://github.com/dotnet/dotnet-docker/tree/master/samples/aspnetapp
+
+
