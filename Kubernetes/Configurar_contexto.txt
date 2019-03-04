@@ -1,0 +1,13 @@
+Conectarte al servicio de azure de kubernetes:
+Instalar kubectl
+Insatalar azure cli -> 
+https://docs.microsoft.com/es-es/cli/azure/install-azure-cli-windows?view=azure-cli-latest
+              -az login (redirige a explorador metes tus credenciales)
+Instalar aks para conectar al cluster de azure
+https://docs.microsoft.com/es-es/azure/aks/kubernetes-walkthrough
+-az aks install-cli => Posible error => error en el path para instalar -> añadir el path a la variable de entorno 
+(windows, escribir variables (Edit de system enviroment variables)=> Advanced, Enviroment Variables, System variables, 
+Path -> Edit -> añadimos el paht que nos sale en el powershell)
+Configurar kubectl para conectarse a nuestro clúster de Kubernetes
+	az aks get-credentials --resource-group myAKSCluster --name myAKSCluster
+Ahora tenemos el contexto myAKSCluster (docker -> btn dcho-> kubernetes->Context)
