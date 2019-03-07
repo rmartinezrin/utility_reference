@@ -1,2 +1,11 @@
 - Forzar a solicitar el usuario (ejecutar antes del push)
 	git config --local credential.helper ""
+- Listar todas las ramas
+	git branch -r
+-Inicial un repositorio
+	git branch
+	git remote
+	git remote add origin https://gitlab.transfesa.com/kiosco/kiosco-api.git
+	git add .
+	git commit -m "Initial commit"
+	git push -u origin master
