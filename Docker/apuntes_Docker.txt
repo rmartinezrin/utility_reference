@@ -19,7 +19,9 @@ docker rm [ContainerId] --force -> Borrar un container eliminando las imagenes i
 docker commit [containerId] [imageName] -> Crear imagen a partir de un contenedor
 docker build -t [imageName] [Directory] -> Crea una imagen a partir del DockerFile del directorio especificado.
 docker build --no-cache -t [imageName] [Directory] -> Crea una imagen a partir del DockerFile del directorio especificado obligando a regenerar imagenes intermedias.
-docker exec -t -i <container> /bin/bash
+docker exec -it <container> /bin/bash
+docker cp [ContainerId]:[FilePath] [TargetDirectory] -> Copia un fichero del docker a una ruta de tu máquina.
+docker cp [FilePath] [ContainerId]:[Directory] -> Copia un fichero de tu máquina una carpeta del docker.
 
 Ctrl+p+q: Salir de un contenedor sin detenerlo
 
