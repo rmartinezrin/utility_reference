@@ -2,10 +2,11 @@
 docker info -> Información de docker
 docker version -> Versión de docker
 docker images -> Listar imagenes
+docker rmi [imageName] --force
 docker ps -> Listar containers activos
 docker ps -a -> Listar todos los containers en cualquier estado
 docker run [imageName] -> Crear contenedor a partir de una imagen
-docker run [imageName] -e [EnvironmentVariable]=[Value] -> Crea un contenedor a partir de una imagen y establece la variable de entorno EnvironmentVariable con el valor Value.
+docker run -p <port>:80 -e [EnvironmentVariable]=[Value] [imageName]-> Crea un contenedor a partir de una imagen y establece la variable de entorno EnvironmentVariable con el valor Value.
 docker run -it [imageName] -> Levantar un contenedor interactivo
 docker run --name [containerName] -it [imageName] -> Levantar un contenedor interactivo con nombre
 docker run -d [imageName] -> Levantar un contenedor desatendido.
@@ -17,8 +18,8 @@ docker rm [ContainerId]-> Borrar un container
 docker rm [ContainerId] --force -> Borrar un container eliminando las imagenes intermedias.
 docker commit [containerId] [imageName] -> Crear imagen a partir de un contenedor
 docker build -t [imageName] [Directory] -> Crea una imagen a partir del DockerFile del directorio especificado.
-docker build --nocache -t [imageName] [Directory] -> Crea una imagen a partir del DockerFile del directorio especificado obligando a regenerar imagenes intermedias.
-
+docker build --no-cache -t [imageName] [Directory] -> Crea una imagen a partir del DockerFile del directorio especificado obligando a regenerar imagenes intermedias.
+docker exec -t -i <container> /bin/bash
 
 Ctrl+p+q: Salir de un contenedor sin detenerlo
 
