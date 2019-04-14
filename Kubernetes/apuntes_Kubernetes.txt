@@ -1,0 +1,125 @@
+Kubernetes Commands:
+kubectl version -> Para ver la versión del servidor (Kubernetes) y el cliente (kubectl)
+kubectl cluster-info -> Para ver los detalles del cluster
+
+kubectl get nodes -> Devuelve los nodos creados en el cluster.
+
+kubectl run [PodName] --image=[ImageName] --port=[Port] -> Crea un nuevo pod con el nombre PodName de la imagen ImageName en el puerto Port.
+kubectl exec -ti [PodName] /bin/bash -> Entrar al pod con una terminal.
+kubectl logs [PodName] -> Muestra los logs de un pod.
+kubectl port-forward [PodName] [Port]:[PodPort] -> Mapea el puerto del pod con el puerto Port de nuestro localhost para poder acceder al pod. 
+
+kubectl get [RecourseType] -o yaml -> Devuelve los recursos en formato yaml.
+kubectl create -f [file.yaml] -> Crea un recurso a partir de un fichero yaml.
+kubectl apply -f [file.yaml] -> Igual que el create pero te permite aplicar varias veces editando el fichero.
+kubectl create -f {Directory] -> Crea todos los recursos definidos en fichero yaml dentro de ese directorio.
+  * Si agregas --record se guardan annotations que son muy útiles para el histórico.
+kubectl edit deployment [DeploymentName] -> Edita el yaml de un deployment.
+kubectl get deployments -> Devuelve la lista de deployments.
+kubectl set image deployment [DeploymentName] [ImageName] --all -> Actualiza todos los pods a una imagen especifica.
+
+kubectl rollout history deployment/[DeploymentName] -> Muestra las versiones de un Pod
+kubectl rollout undo deployment/[DeploymentName] -> Hace un rollback a la versión anterior.
+
+kubectl get pods -> Devuelve todos los pods
+kubectl get pods -o wide -> Devuelve todos los pods con información adicional.
+kubectl get pods --field-selector=spec.nodeName=[NodeName] -> Devuelve todos los pods levantados en el nodo NodeName.
+kubectl get pod [PodName] -> Devuelve el pod con nombre PodName.kubectl label pods [PodName] [Key]=[Value] -> Añadir una etiqueta a un pod
+kubectl get pods --show-labels -> Muestra los pods con sus etiquetas.
+kubectl get pods -l [Key]=[Value] -> Buscar pods por una etiqueta
+kubectl get pods -Lrun -> Mostrar los pods con sus etiquetas como columnas.
+
+kubectl get rs --watch -> Muestra los ReplicaSets creados.
+
+kubectl get services -> Devuelve todos los servicios
+kubectl expose deployment/[DeploymentName] --port=[Port] --type=NodePort -> Expone los pods asociados a un deployment mediante la dirección del nodo en donde se encuentren en el puerto Port.
+
+Un Pod es una instanciación de una imagen o más imagenes en Kubernetes.
+
+Pod.yaml example:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mongo  
+  labels:
+    app: mongo
+spec:
+  containers:
+  - image: mongo
+    name: mongo
+	- containerPort: 80
+
+Un Deployment es una especificación de como desplegar un Pod, 
+así como su gestión de réplicas, rollback, etc.
+
+Deployment.yaml example:
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-deployment
+  labels:
+    app: mongo
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mongo
+  template:
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      containers:
+      - name: mongo
+        image: mongo
+        ports:
+        - containerPort: 80
+		
+metadata.name: Nombre del deployment.
+spec.replicas: Número de replicas del Pod.
+spec.template: Especificación del Pod que se va a desplegar.
+
+Un servicio expone un pod o conjunto de pods bajo una misma ip y puerto. 
+Según el tipo de servicio tiene una finalidad:
+- Servicio ClusterIp: Los expone dentro del cluster.
+- NodePort: Los expone fuera del cluster.
+- LoadBalancer: Los expone balanceando la carga entre distintos nodos.
+	
+Service.yaml example:
+
+apiVersion: apps/v1
+kind: Service
+metadata:
+  name: nginx
+  namespace: default
+spec:
+  type: NodePort
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+  selector:
+    app: nginx
+
+Ingress es un controlador que permite aplicarle unas reglas para hacer de proxy inverso en la entrada a nuestro
+cluster de kubernetes.
+
+Ingress.yaml example:
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nginx
+  annotations:
+    ngnix.ingress.kubernetes.io/affinity: cookie
+spec:
+  rules:
+  - host: foo.bar.com
+  http:
+    paths:
+	- path: /
+	  backend:
+	    serviceName: nginx
+		servicePort: 80
+
