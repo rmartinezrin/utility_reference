@@ -33,7 +33,10 @@ kubectl get rs --watch -> Muestra los ReplicaSets creados.
 
 kubectl get services -> Devuelve todos los servicios
 kubectl expose deployment/[DeploymentName] --port=[Port] --type=NodePort -> Expone los pods asociados a un deployment mediante la dirección del nodo en donde se encuentren en el puerto Port.
-
+kubectl get cronjobs -> Listar cronjobs
+kubectl get cronjob monday-cyclic -o yaml -> describir cronjob
+kubectl get jobs -> listar jobs
+kubectl describe job/monday-cyclic-1562543940 -> describir job
 Un Pod es una instanciación de una imagen o más imagenes en Kubernetes.
 
 Pod.yaml example:
