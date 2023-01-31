@@ -11,3 +11,27 @@ Path -> Edit -> añadimos el paht que nos sale en el powershell)
 Configurar kubectl para conectarse a nuestro clúster de Kubernetes
 	az aks get-credentials --resource-group myAKSCluster --name myAKSCluster
 Ahora tenemos el contexto myAKSCluster (docker -> btn dcho-> kubernetes->Context)
+
+Si tenemos mas de un directorio (subscription) en azure, antes de hacer az aks get-credentials --resource-group myAKSCluster --name myAKSCluster hacemos:
+ az login (vemos todos los ids de nuestas subscripciones)
+
+az aks get-credentials --resource-group qualitas-k8s --name qualitas-k8s --subscription 6b77d813-83aa-42f8-b148-8da09d1203fa --overwrite-existing
+
+Evo: 
+
+az aks get-credentials --resource-group EV70RURSG05_CONFLUENT_AKS --name ev70ruaks02 --subscription "EVO Pre"
+
+Conectores:
+	az login --tenant 9b9f4da4-ab80-4165-b15f-2becac835f46
+	
+    az account set --subscription "EVO Pro"
+
+    az aks get-credentials --resource-group EV71RDRSG05_CONFLUENT_AKS --name ev71rdaks02
+	
+	Nuevos:
+	dev:
+	az aks get-credentials --resource-group EV70RDRSG05_CONFLUENT_AKS --name ev70rdaks02 --overwrite-existing
+
+	pro
+
+	az aks get-credentials --resource-group EV71RPRSG05_CONFLUENT_AKS --name ev71rpaks02

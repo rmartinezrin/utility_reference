@@ -9,3 +9,7 @@
 	git add .
 	git commit -m "Initial commit"
 	git push -u origin master
+
+- Rebase interactivo with merges commit
+	git rebase -i -r <commint id>
+	

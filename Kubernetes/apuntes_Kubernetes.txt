@@ -38,7 +38,15 @@ kubectl get cronjob monday-cyclic -o yaml -> describir cronjob
 kubectl get jobs -> listar jobs
 kubectl describe job/monday-cyclic-1562543940 -> describir job
 Un Pod es una instanciación de una imagen o más imagenes en Kubernetes.
+Copiar ficheros del pod a tu localhost 
+kubectl cp {nombre_del_pod}:{path_fichero_en_pod} {nombre_para_copiar_en_local} ->  kubectl cp pi-administrator-deploy-79f9c96d7f-958ds:app.jar app.jar
 
+
+Metrics:
+ - Download -> https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+ - edit -> Set  - --kubelet-preferred-address-types=InternalIP and add  - --kubelet-insecure-tls
+ - kubectl apply -f components.yaml
+ - kubectl top pods OR while (1) {kubectl top pods; sleep 5}
 Pod.yaml example:
 
 apiVersion: v1
@@ -83,6 +91,15 @@ spec:
 metadata.name: Nombre del deployment.
 spec.replicas: Número de replicas del Pod.
 spec.template: Especificación del Pod que se va a desplegar.
+
+Usar imagen local en un deployment local:
+	- docker pull registry
+	- Start local registry container
+		docker run -d -p 5000:5000 --restart=always --name registry registry:2
+	- Push image in local registry
+		docker tag <image_id> localhost:5000/<local-image-name>:0.0.1
+		docker push localhost:5000/<local-image-name>:0.0.1
+	- deployment -> image: localhost:5000/<nombre-imagen>
 
 Un servicio expone un pod o conjunto de pods bajo una misma ip y puerto. 
 Según el tipo de servicio tiene una finalidad:

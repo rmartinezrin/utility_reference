@@ -10,7 +10,7 @@ docker run -p <port>:80 -e [EnvironmentVariable]=[Value] [imageName]-> Crea un c
 docker run -it [imageName] -> Levantar un contenedor interactivo
 docker run --name [containerName] -it [imageName] -> Levantar un contenedor interactivo con nombre
 docker run -d [imageName] -> Levantar un contenedor desatendido.
-	-rm: Elimina el container despues de que se pare.
+	--rm: Elimina el container despues de que se pare.
 docker start [containerId] -> Levantar un contenedor que está parado (se pueden usar las primera letras del Id).
 docker attach [containerId] -> Conectarme a un contenedor en ejecución (se pueden usar las primera letras del Id).
 docker stop [containerId] -> Parar un contenedor (se pueden usar las primera letras del Id).
@@ -19,7 +19,8 @@ docker rm [ContainerId] --force -> Borrar un container eliminando las imagenes i
 docker commit [containerId] [imageName] -> Crear imagen a partir de un contenedor
 docker build -t [imageName] [Directory] -> Crea una imagen a partir del DockerFile del directorio especificado.
 docker build --no-cache -t [imageName] [Directory] -> Crea una imagen a partir del DockerFile del directorio especificado obligando a regenerar imagenes intermedias.
-docker exec -it <container> /bin/bash
+docker build -t mysuperimage -f MyDockerfile .
+docker exec -it <container> /bin/bash (or /bin/sh)
 docker cp [ContainerId]:[FilePath] [TargetDirectory] -> Copia un fichero del docker a una ruta de tu máquina.
 docker cp [FilePath] [ContainerId]:[Directory] -> Copia un fichero de tu máquina una carpeta del docker.
 
