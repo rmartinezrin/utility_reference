@@ -1,4 +1,6 @@
 Kubernetes Commands:
+kubectl config get-contexts -> Ver los contextos
+kubectl config use-context <nombre> Cambiar de contexto
 kubectl version -> Para ver la versión del servidor (Kubernetes) y el cliente (kubectl)
 kubectl cluster-info -> Para ver los detalles del cluster
 
